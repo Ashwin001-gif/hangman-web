@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hangman Game</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .emoji {
+            font-size: 3rem;
+        }
+
+        .word {
+            font-size: 2rem;
+            letter-spacing: 10px;
+            margin: 20px 0;
+            word-break: break-word;
+        }
+
+        .info {
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .info p {
+            margin: 8px 0;
+            font-size: 1rem;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 10px 0;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        input[type="text"], input[type="submit"], button {
+            font-size: 1rem;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        input[type="submit"], button {
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            border: none;
+        }
+
+        input[type="submit"]:hover, button:hover {
+            background-color: #0056b3;
+        }
+
+        .message {
+            font-weight: bold;
+            margin-top: 10px;
+            font-size: 1.1rem;
+        }
+
+        @media (max-width: 480px) {
+            .word {
+                font-size: 1.5rem;
+                letter-spacing: 6px;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .emoji {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Hangman Game</h1>
+    <div class="emoji">
+        {% if attempts_left == 6 %}😀{% elif attempts_left == 4 %}😰{% elif attempts_left == 2 %}😨{% elif attempts_left == 0 %}💀{% else %}😓{% endif %}
+    </div>
+
+    <div class="word">{{ word_display }}</div>
+
+    <div class="info">
+        <p><strong>Hint:</strong> {{ hint }}</p>
+        <p>Guessed letters: {{ guessed }}</p>
+        <p>Attempts left: {{ attempts_left }}</p>
+
+        <form action="/guess" method="post">
+            <input type="text" name="letter" maxlength="1" placeholder="Enter a letter" required autofocus>
+            <input type="submit" value="Guess">
+        </form>
+
+        <form action="/reset" method="get">
+            <button type="submit">🔁 Reset Game</button>
+        </form>
+
+        <div class="message">{{ message }}</div>
+    </div>
+
+</body>
+</html>
